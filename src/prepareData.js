@@ -2,8 +2,14 @@ import IsomorphicRelay from 'isomorphic-relay';
 import QueryAggregator from 'react-router-relay/lib/QueryAggregator';
 import render from './render';
 
+let queryAggregator;
+
 export default function prepareData(renderProps, networkLayer) {
-  const queryAggregator = new QueryAggregator(renderProps);
+  if (queryAggregator) {
+    queryAggregator.updateQueryConfig(renderProps);
+  } else {
+    queryAggregator = new QueryAggregator(renderProps);
+  }
 
   return IsomorphicRelay.prepareData(
     {
